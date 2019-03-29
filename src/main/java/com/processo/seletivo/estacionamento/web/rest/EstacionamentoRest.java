@@ -66,7 +66,7 @@ public class EstacionamentoRest {
 	@ApiOperation(
 			value="Lista", 
 			notes="Essa operação retorna todos as vagas ocupadas.")
-	@RequestMapping(value = "/{patioId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{patioId}", method = RequestMethod.GET)
 	public List<Estacionamento> listarVagas(@PathVariable Long patioId){
 		return estacionamentoDao.findByPatioId(patioId);
 	}
