@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.processo.seletivo.estacionamento.model.Estacionamento;
+import com.processo.seletivo.estacionamento.model.Veiculo;
 import com.processo.seletivo.estacionamento.repository.EstacionamentoDao;
 import com.processo.seletivo.estacionamento.repository.PatioDao;
 import com.processo.seletivo.estacionamento.repository.VeiculoDao;
@@ -48,7 +49,13 @@ public class EstacionamentoRest {
 		if(estacionamento == null) {
 			estacionamento = new Estacionamento();
 			estacionamento.setEntrada(new Date());
-			estacionamento.setVeiculo(veiculoDao.findByPlaca(placa));
+			Veiculo veiculo = veiculoDao.findByPlaca(placa);
+			if(veiculo == null) {
+				veiculo = new Veiculo();
+				veiculo.setPlaca(placa);
+				veiculoDao.save(veiculo);
+			}
+			estacionamento.setVeiculo(veiculo);
 			estacionamento.setPatio(patioDao.findById(patioId).get());
 		}else {
 			estacionamento.setSaida(new Date());
